@@ -38,11 +38,12 @@ class ProfesorController extends Controller
      */
     public function store(Request $request)
     {
-        $profesor = new Profesor();
-        $profesor ->nombre = $request ->nombre;
-        $profesor ->claveMateria = $request ->claveMateria;
-        $profesor->save();
+        //$profesor = new Profesor();
+        //$profesor ->nombre = $request ->nombre;
+        //$profesor ->claveMateria = $request ->claveMateria;
+        //$profesor->save();
 
+        $profesor = Profesor::create($request->all());
         return redirect()->route('profesor.index');
     }
 
@@ -54,7 +55,7 @@ class ProfesorController extends Controller
      */
     public function show(Profesor $profesor)
     {
-        return view('profesor.profesorShow');
+        return view('profesor.profesorShow', compact('profesor'));
     }
 
     /**
@@ -65,10 +66,10 @@ class ProfesorController extends Controller
      */
     public function edit(Profesor $profesor)
     {
-        return view('profesor.profesorForm');
+        return view('profesor.profesorForm',compact('profesor'));
     }
 
-    /**
+    /**P
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -77,7 +78,8 @@ class ProfesorController extends Controller
      */
     public function update(Request $request, Profesor $profesor)
     {
-        //
+        Profesor::where('id', $profesor->id)->update($request->except('_token','_method'));
+        return redirect()->route('profesor.show',$profesor);
     }
 
     /**
@@ -88,6 +90,8 @@ class ProfesorController extends Controller
      */
     public function destroy(Profesor $profesor)
     {
-        //
+        $profesor->delete();
+
+        return redirect()->route('profesor.index');
     }
 }

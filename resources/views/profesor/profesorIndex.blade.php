@@ -13,14 +13,21 @@
                 <th>ID</th>
                 <th>Nombre del Profesor</th>
                 <th>Clave de la materia</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($profesors as $profesor)
                 <tr>
-                    <td>{{$profesor->id}}</td>
+                    <td>
+                        <a href={{ route('profesor.show', $profesor->id) }}}}>{{$profesor->id}}</a>
+                        
+                    </td>
                     <td>{{$profesor->nombre}}</td>
                     <td>{{$profesor->claveMateria}}</td>
+                    <td>
+                        <a href="{{route('profesor.edit', $profesor)}}">Editar</a>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
